@@ -1,0 +1,58 @@
+.article {
+    float: left;
+    width: 50%;
+    height: auto; /* only for demonstration, should be removed */
+    background: rgb(0, 0, 0);
+  }
+  .section::after {
+    content: "";
+    display: table;
+    clear: both;
+    height: auto;
+  }
+  .aside{
+    float: left;
+    width: 50%;
+    background-color: #000000;
+    height: auto;
+    margin-top: 15%;
+  }
+
+.main-articledetail{
+    font-family: Georgia,Cambria,"Times New Roman",Times,serif;
+color: white;
+}
+
+  .detail{
+ padding-left: 20%;
+ padding-right: 20%;
+ font-size: 18px;
+    line-height: 30px;
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+  }
+
+  span{
+    padding-left: 23%;
+    padding-right: 23%;
+    font-size: 12px;
+    font-weight: 100;
+    color: rgba(143, 143, 143, 0.804);
+  }
+
+  .suggestedby{
+    padding-left: 23%;
+    padding-right: 23%;
+font-size: 15px;
+font-weight: 300;
+}
+
+@media screen and (max-width: 685px) {
+  .headmain{
+    font-size: 1em;
+  }
+
+}

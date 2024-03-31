@@ -1,0 +1,23 @@
+<div class="container">
+    <section class="cards-wrapper"   *ngFor="let blogPost of blogPosts">
+      <div class="card-grid-space" style="display: flex;">
+        <div class="num">{{blogPost.fields.numberofpost}}</div>
+        <a class="card" [routerLink]="['/blogPost', blogPost.sys.id]" style="--bg-img: url('{{blogPost.fields.mainHeroImage.fields.file.url}}')">
+          <div>
+            <h1>{{blogPost.fields.title}}</h1>
+            <p>{{blogPost.fields.description}}</p>
+            <div class="tags">
+              <div class="tag">Suggested by - {{blogPost.fields.suggestedBy}}</div>
+            </div>
+          </div>
+
+          
+        </a>
+      </div>
+
+    </section>
+
+
+
+   </div>
+   

@@ -1,0 +1,202 @@
+<!--
+<div class="chat-container">
+    <div class="chat-history" *ngFor="let message of messages">
+      <div class="user-message" *ngIf="message.isUser">
+        {{ message.text }}
+      </div>
+      <div class="bot-message" *ngIf="!message.isUser">
+        {{ message.text }}
+      </div>
+    </div>
+    <div class="chat-input-container">
+      <form (ngSubmit)="submit()">
+        <input [(ngModel)]="inputText" placeholder="Type your message here" [ngModelOptions]="{standalone: true}">
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+  </div>
+  
+
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Loan Repayment Calculator</title>
+</head>
+<body>
+  <h1>Loan Repayment Calculator</h1>
+
+  <form>
+    <label for="start-date">Start Date:</label>
+    <input type="date" id="start-date" name="start-date">
+
+    <label for="loan-amount">Loan Amount:</label>
+    <input type="number" id="loan-amount" name="loan-amount">
+
+    <label for="installment-interval">Installment Interval:</label>
+    <select id="installment-interval" name="installment-interval">
+      <option value="monthly">Monthly</option>
+      <option value="weekly">Weekly</option>
+      <option value="daily">Daily</option>
+    </select>
+
+    <label for="installment-amount">Installment Amount:</label>
+    <input type="number" id="installment-amount" name="installment-amount">
+
+    <label for="interest-rate">Interest Rate (%):</label>
+    <input type="number" id="interest-rate" name="interest-rate" step="0.01">
+
+    <button type="button" onclick="calculateRepayment()">Calculate Repayment</button>
+  </form>
+
+  <div id="results">
+    <h2>Payment Schedule</h2>
+    <table id="schedule">
+      <thead>
+        <tr>
+          <th>Payment #</th>
+          <th>Amount</th>
+          <th>Date</th>
+        </tr>
+      </thead>
+      <tbody id="schedule-body">
+      </tbody>
+    </table>
+    <p id="payoff-date"></p>
+  </div>
+</body>
+</html>
+
+
+
+<script>
+
+function calculateRepayment() {
+    // Get the input values
+    let startDate = new Date(document.getElementById("start-date").value);
+    let loanAmount = parseFloat(document.getElementById("loan-amount").value);
+    let installmentInterval = document.getElementById("installment-interval").value;
+    let installmentAmount = parseFloat(document.getElementById("installment-amount").value);
+    let interestRate = parseFloat(document.getElementById("interest-rate").value) / 100;
+
+
+// Constants
+let publicHolidays = [new Date(2022, 0, 1), new Date(2022, 11, 25), new Date(2022, 11, 26)]; // Example public holidays
+let weekendDays = [0, 6]; // Sunday = 0, Saturday = 6
+
+// Helper function to check if a date is a weekend or public holiday
+function isWeekendOrHoliday(date) {
+    let dayOfWeek = date.getUTCDay();
+    if (weekendDays.includes(dayOfWeek)) {
+        return true;
+    }
+    for (let i = 0; i < publicHolidays.length; i++) {
+        if (date.getTime() === publicHolidays[i].getTime()) {
+            return true;
+        }
+    }
+    return false;
+}
+
+// Helper function to add a certain number of business days to a date
+function addBusinessDays(date, days) {
+    let newDate = new Date(date);
+    while (days > 0) {
+        newDate.setUTCDate(newDate.getUTCDate() + 1);
+        if (!isWeekendOrHoliday(newDate)) {
+            days--;
+        }
+    }
+    return newDate;
+}
+
+// Calculate total repayment amount with interest
+let totalRepaymentAmount = loanAmount + loanAmount * interestRate;
+
+// Initialize variables to track remaining balance and number of installments
+let remainingBalance = totalRepaymentAmount;
+let numInstallments = 0;
+
+// Create an array to store the payment schedule
+let paymentSchedule = [];
+
+// Use while loop to continue making payments until the balance is paid off
+while (remainingBalance > 0) {
+    numInstallments++;
+    let installmentPayment = Math.min(installmentAmount, remainingBalance);
+    remainingBalance -= installmentPayment;
+
+    let paymentDate = startDate;
+    if (installmentInterval === "daily") {
+        paymentDate = addBusinessDays(startDate, numInstallments);
+    } else if (installmentInterval === "weekly") {
+        paymentDate = addBusinessDays(startDate, numInstallments * 7);
+    } else {
+        paymentDate = new Date(startDate.getFullYear(), startDate.getMonth() + numInstallments, startDate.getDate());
+    }
+
+    // Add the installment payment and date to the payment schedule
+    paymentSchedule.push({
+        date: paymentDate,
+        amount: installmentPayment
+    });
+}
+
+// The last payment is the payoff date
+/*
+let payoffDate = paymentSchedule[numInstallments - 1].date;  */
+
+
+// Write the payoff date
+let payoffDate = document.getElementById("payoff-date");
+  payoffDate.innerHTML = `Payoff Date: ${paymentSchedule[numInstallments - 1].date.toLocaleDateString()}`;
+  // Show the results
+  document.getElementById("results").style.display = "block";
+
+// Write the payment schedule to the table
+let scheduleTable = document.getElementById("schedule-body");
+  scheduleTable.innerHTML = "";
+  for (let i = 0; i < paymentSchedule.length; i++) {
+    scheduleTable.innerHTML += `<tr>
+      <td>${i + 1}</td>
+      <td>$${paymentSchedule[i].amount}</td>
+      <td>${paymentSchedule[i].date.toLocaleDateString()}</td>
+    </tr>`;
+  }
+
+
+  
+
+
+// Get a reference to the schedule table body
+let scheduleBody = document.getElementById("schedule-body");
+
+// Use a for loop to add each payment to the table
+for (let i = 0; i < paymentSchedule.length; i++) {
+let row = document.createElement("tr");
+let paymentNumberCell = document.createElement("td");
+paymentNumberCell.innerHTML = i + 1;
+let amountCell = document.createElement("td");
+amountCell.innerHTML = "$" + paymentSchedule[i].amount.toFixed(2);
+let dateCell = document.createElement("td");
+dateCell.innerHTML = paymentSchedule[i].date.toString();
+row.appendChild(paymentNumberCell);
+row.appendChild(amountCell);
+row.appendChild(dateCell);
+scheduleBody.appendChild(row);
+}
+
+// Add the payoff date to the page
+let payoffDateElement = document.getElementById("payoff-date");
+payoffDateElement.innerHTML = "Estimated payoff date: " + payoff
+
+
+
+}
+
+
+
+</script>

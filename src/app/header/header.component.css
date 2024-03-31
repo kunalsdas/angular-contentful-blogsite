@@ -1,0 +1,53 @@
+.logo{
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+.container-nav{
+  text-align: center;
+  color: whitesmoke;
+  padding-top: 5px;
+}
+
+  .nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 2.5em;
+  }
+
+  .nav__item {
+    margin: 0 10px;
+    color: #dbdbdb;  
+    text-decoration: none;
+  }
+
+  .nav__item:hover{
+    text-decoration: none;
+  }
+
+  hr{
+    width: 100%;
+    color: whitesmoke;
+    text-decoration: 1px solid;
+    margin: 0;
+  }
+  .logo-img{
+    margin: 0px;
+  }
+
+
+
+.fs-icon--search{
+  color: white;
+  width: 24px;
+  fill: #fff;
+    pointer-events: none;
+    text-align: right;
+}
+
+@media screen and (min-width: 305px) {
+  .logo-img{
+    width: 15em;
+    text-align: center;
+}
+}

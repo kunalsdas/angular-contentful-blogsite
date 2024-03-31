@@ -1,0 +1,31 @@
+/* CSS */
+.hero {
+    background-image: url('/assets/home_hero.jpeg');
+    background-size: cover;
+    background-position: center;
+    height: 500px;
+    display: flex;
+    color: rgba(255, 255, 255, 0.814);
+    flex-direction: column;
+    justify-content: center;
+    align-items: right;
+    text-align: right;
+    
+  }
+  
+  .hero-title {
+    font-size: 48px;
+    text-align: right !important; 
+    font-weight: bold;
+    margin: 0;
+    padding-right: 20px;
+  }
+  
+  .hero-description {
+    font-size: 24px;
+    margin: 0;
+    margin-bottom: 24px;
+    padding-right: 20px;
+
+  }
+  

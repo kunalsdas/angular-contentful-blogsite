@@ -1,0 +1,59 @@
+<!--
+<main *ngIf="blogPost$ |async as blogPost">
+  <div>
+    <a href="{{ blogPost.fields.url }}" target="_blank">
+      <img width="40%" style="margin: 10px" class="float-right rounded" src="{{ blogPost.fields.mainHeroImage.fields.file.url }}"/></a>
+    <h2><a href="{{ blogPost.fields.url }}" target="_blank">{{ blogPost.fields.title }}</a></h2>
+    <i>by {{ blogPost.fields.suggestedBy }}</i>
+    <br><br>
+
+<div [innerHTML]="blogPost.fields.description | mdToHtml"></div>
+    <div [innerHTML]="blogPost.fields.longDescription | mdToHtml"></div>
+
+    <a href="{{ blogPost.fields.url }}" target="_blank" class="btn btn-success">Go To </a>
+    <button (click)="goToList()" class="btn btn-danger">Back To List</button>
+  </div>
+</main>
+
+-->
+
+<main *ngIf="blogPost$ |async as blogPost">
+
+<section class="section">
+  <article class="article">
+    <img width="100%" class="imghero" src="{{ blogPost.fields.mainHeroImage.fields.file.url }}"/>
+  </article>
+
+  <aside class="aside">
+    <h1 class="headmain" style="color: white; font-family: Playfair Display,Merriweather,serif; text-align: center;">{{blogPost.fields.title}}</h1>
+    </aside>
+
+</section>
+  <br/>
+  <br/>
+ 
+  <article class="main-articledetail">
+    <p class="suggestedby"><i>
+      Suggested By  - {{blogPost.fields.suggestedBy}}
+    </i>
+    </p>
+<hr style="text-decoration:1px solid #e2e2e2; width: 54%; margin: 0 auto; ">
+
+    <span>
+       {{blogPost.fields.date | date}}
+    </span>
+    <div class="container" > 
+<p class="detail">
+  <markdown ngPreserveWhitespaces>
+    {{blogPost.fields.longDescription}}
+</markdown>
+</p>    
+    </div>
+
+  </article>
+
+</main>
+
+
+
+
